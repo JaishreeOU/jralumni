@@ -5,9 +5,9 @@
     {% for student in students %}
         <alumstud class="student">
             <tr>
-                <tc> {{ student.lnamefname }}</tc>
-                <tc><time class="date">{{ student.created_date }}</time></tc>
-                <tc> {{ student.birthdate|linebreaksbr }}</tc>
+                <td> {{ student.lnamefname }}</td>
+                <td><time class="date">{{ student.created_date }}</time></td>
+                <td> {{ student.birthdate|linebreaksbr }}</td>
             </tr>
         </alumstud>
     {% endfor %}
