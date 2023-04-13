@@ -3,13 +3,13 @@
 <table>
 
     {% for student in students %}
-    <tr>
         <alumstud class="student">
-            <tc> {{ student.lnamefname }}</tc>
-            <tc><time class="date">{{ student.created_date }}</time></tc>
-            <tc> {{ student.birthdate|linebreaksbr }}</tc>
+            <tr>
+                <tc> {{ student.lnamefname }}</tc>
+                <tc><time class="date">{{ student.created_date }}</time></tc>
+                <tc> {{ student.birthdate|linebreaksbr }}</tc>
+            </tr>
         </alumstud>
-    </tr>
     {% endfor %}
 </table>
 
