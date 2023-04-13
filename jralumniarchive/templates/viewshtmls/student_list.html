@@ -3,13 +3,13 @@
 <table>
 
     {% for student in students %}
-        <alumstud class="student">
+        <student class="student">
             <tr>
                 <td> {{ student.lnamefname }}</td>
                 <td><time class="date">{{ student.created_date }}</time></td>
-                <td><time class="date">{{ student.birthdate }}</time></td>
+                <td>{{ student.nickname }}</td>
             </tr>
-        </alumstud>
+        </student>
     {% endfor %}
 </table>
 
