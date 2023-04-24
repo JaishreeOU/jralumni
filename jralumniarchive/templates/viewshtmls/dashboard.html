@@ -1,0 +1,12 @@
+{% extends 'viewshtmls/base.html' %}
+{% block title %}<title>JRAlumni System extended</title>{% endblock %}
+{% block content %}
+  <h1>JR Alumni Archive</h1>
+  <p>Welcome to ICFHTO Alumni Archive</p>
+  <h2>Alumni Archive</h2>
+  <p>The archive has the following summary</p>
+  <ul>
+    <li><strong>Families:</strong> {{ num_families }}</li>
+    <li><strong>Alumni:</strong> {{ num_students }}</li>
+  </ul>
+{% endblock %}

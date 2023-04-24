@@ -7,13 +7,14 @@ from django.utils import timezone
 class Student(models.Model):
     lastname = models.CharField(max_length=200, help_text='Enter Last Name')
     firstname = models.CharField(max_length=200, help_text='Enter First Name')
+#    alumnifamily = models.ForeignKey('AlumniFamily', on_delete=models.RESTRICT, null=True)
     nickname = models.CharField(max_length=200, help_text='Enter NickName')
     addr1 = models.CharField(max_length=200, help_text='Enter Addr Line 1')
     addr2 = models.CharField(max_length=200, help_text='Enter Addr Line 2')
     city = models.CharField(max_length=200, help_text='Enter Addr City')
     state = models.CharField(max_length=200, help_text='Enter Addr State')
-    zip = models.CharField(max_length=10,help_text='Enter Addr Zip')
-    birthdate = models.DateField(help_text='Enter Date of Birth')
+    zip = models.CharField(max_length=10, help_text='Enter Addr Zip')
+    birthdate = models.DateField
     phone1 = models.CharField(max_length=100, help_text='Enter Phone')
     createdby = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
@@ -27,7 +28,7 @@ class Student(models.Model):
     @property
     def fnamelname(self):
         return "%s %s" % (self.firstname, self.lastname)
-    
+
     def verify(self):
         self.verified_date = timezone.now()
         self.save()
@@ -38,4 +39,28 @@ class Student(models.Model):
     def get_absolute_url(self):
         """Returns the URL to access a particular instance of the model."""
         return reverse('model-detail-view', args=[str(self.id)])
+
+
+
+class AlumniFamily(models.Model):
+    """Model representing a family """
+    familyName = models.CharField(max_length=200, help_text='Enter Family Name')
+
+    # ManyToManyField used because genre can contain many books. Books can cover many genres.
+    # Genre class has already been defined so we can specify the object above.
+    student = models.ManyToManyField(Student, help_text='Select a student for this family')
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return self.familyName
+
+    def get_absolute_url(self):
+        """Returns the URL to access a detail record for this book."""
+        return reverse('alumnifamily-detail', args=[str(self.id)])
+
+    def display_student(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ' and  '.join(student.lnamefname for student in self.student.all()[:3])
+
+# display_student.short_description = 'Kids'
 

@@ -1,0 +1,17 @@
+{% extends 'viewshtmls/base.html' %}
+{% block title %}<title>JRAlumni System AlumniFamilyList</title>{% endblock %}
+
+{% block content %}
+  <h1>Alumni Family List</h1>
+  {% if alumnifamily_list %}
+  <ul>
+    {% for AlumniFamily in alumnifamily_list %}
+      <li>
+        <a href="">{{ AlumniFamily.familyName }}</a> ({{AlumniFamily.display_student}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no families in the table.</p>
+  {% endif %}
+{% endblock %}

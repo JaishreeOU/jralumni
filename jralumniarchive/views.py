@@ -1,10 +1,47 @@
 from django.shortcuts import render
 # from django.utils import timezone
-from .models import Student
+from .models import Student, AlumniFamily
 from django.views import generic
 
 # Create your views here.
 # try
+
+####################
+# Function Based View
+####################
+def dashboard(request):
+    """View function for home page of site."""
+
+    # Generate counts of some of the main objects
+    num_families = AlumniFamily.objects.all().count()
+    num_students = Student.objects.all().count()
+
+    context = {
+        'num_families': num_families,
+        'num_students': num_students,
+    }
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'viewshtmls/dashboard.html', context=context)
+
+###################
+# Class Based View
+###################
+class FamilyListView(generic.ListView):
+    model = AlumniFamily
+    template_name = "viewshtmls/alumnifamily_list.html"
+    queryset = AlumniFamily.objects.all()
+# filter(familyName__icontains='a')[:5]
+
+#    def get_queryset(self):
+#        return AlumniFamily.objects.filter(familyName__icontains='a')[:5]
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(FamilyListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['additional_data'] = 'This is just some additional_data'
+        return context
 
 
 def student_list(request):
@@ -20,4 +57,4 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by("-pub_date")[:5]
+        return Student.objects.order_by("-pub_date")[:5]
