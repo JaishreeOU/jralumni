@@ -1,5 +1,7 @@
 """jralumnisite URL Configuration
 
+# DIG team refers the nucleus
+
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
@@ -18,5 +20,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('jralumniarchive.urls'))
+    path('jralumniarchive/', include('jralumniarchive.urls')),
 ]
+
+from django.views.generic import RedirectView
+urlpatterns += [
+    path('', RedirectView.as_view(url='jralumniarchive/', permanent=True)),
+]
+
