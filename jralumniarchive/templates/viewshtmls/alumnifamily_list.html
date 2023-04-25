@@ -1,13 +1,17 @@
 {% extends 'viewshtmls/base.html' %}
-{% block title %}<title>JRAlumni System AlumniFamilyList</title>{% endblock %}
+{% block title %}<title>JRAlumni System AlumniFamilyList {{additional_data}}}</title>{% endblock %}
 
 {% block content %}
   <h1>Alumni Family List</h1>
+
   {% if alumnifamily_list %}
   <ul>
     {% for AlumniFamily in alumnifamily_list %}
       <li>
-        <a href="">{{ AlumniFamily.familyName }}</a> ({{AlumniFamily.display_student}})
+        <a href="{{ AlumniFamily.get_absolute_url }}">{{ AlumniFamily.familyName }}</a> ({{AlumniFamily.display_student}})
+      </li>
+      <li>
+            <a href="{% url 'jralumniarchive:justsomepage' %}">{{ AlumniFamily.familyName }}justsomepage</a> ({{AlumniFamily.display_student}})
       </li>
     {% endfor %}
   </ul>

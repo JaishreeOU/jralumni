@@ -24,17 +24,28 @@ def dashboard(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'viewshtmls/dashboard.html', context=context)
 
+
+def justsomepage(request):
+    """View function for justsomepage."""
+    context = {
+        'message': 'Landing here',
+    }
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'viewshtmls/justsomepage.html', context=context)
+
+
 ###################
-# Class Based View
+# generic Class Based View
 ###################
 class FamilyListView(generic.ListView):
     model = AlumniFamily
     template_name = "viewshtmls/alumnifamily_list.html"
-    queryset = AlumniFamily.objects.all()
-# filter(familyName__icontains='a')[:5]
 
-#    def get_queryset(self):
-#        return AlumniFamily.objects.filter(familyName__icontains='a')[:5]
+
+    def get_queryset(self):
+       return AlumniFamily.objects.all()
+       # filter(familyName__icontains='a')[:5]
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
