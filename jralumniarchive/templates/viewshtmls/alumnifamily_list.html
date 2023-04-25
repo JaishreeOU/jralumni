@@ -1,8 +1,8 @@
 {% extends 'viewshtmls/base.html' %}
-{% block title %}<title>JRAlumni System AlumniFamilyList {{additional_data}}}</title>{% endblock %}
+{% block title %}<title>JRAlumni System AlumniFamilyList {{additional_data}}</title>{% endblock %}
 
 {% block content %}
-  <h1>Alumni Family List</h1>
+  <h1>Alumni Family List {{additional_data}}</h1>
 
   {% if alumnifamily_list %}
   <ul>

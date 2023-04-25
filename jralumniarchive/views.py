@@ -35,6 +35,20 @@ def justsomepage(request):
     return render(request, 'viewshtmls/justsomepage.html', context=context)
 
 
+
+def student_list(request):
+    students = Student.objects.order_by('created_date')
+#        #filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'viewshtmls/student_list.html', {'students': students, 'additional_data': 'This is from student_list'})
+
+
+
+def family_list(request):
+    alumnifamily_list = AlumniFamily.objects.all()
+#        #filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'viewshtmls/alumnifamily_list.html', {'alumnifamily_list': alumnifamily_list, 'additional_data': 'This is from family_list'})
+
+
 ###################
 # generic Class Based View
 ###################
@@ -51,21 +65,24 @@ class FamilyListView(generic.ListView):
         # Call the base implementation first to get the context
         context = super(FamilyListView, self).get_context_data(**kwargs)
         # Create any data and add it to the context
-        context['additional_data'] = 'This is just some additional_data'
+        context['additional_data'] = 'This is from FamilyListView'
         return context
 
 
-def student_list(request):
-    students = Student.objects.order_by('created_date')
-#        #filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'viewshtmls/student_list.html', {'students': students})
 
 
-class IndexView(generic.ListView):
+class StudentListView(generic.ListView):
     model = Student
-    template_name = "jralumniarchive/student_list.html"
-    context_object_name = "student_list"
+    template_name = "viewshtmls/student_list.html"
+    context_object_name = "students"
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Student.objects.order_by("-pub_date")[:5]
+        return Student.objects.order_by("-lastname")[:5]
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['additional_data'] = 'This is from StudentListView'
+        return context
