@@ -22,7 +22,7 @@ def dashboard(request):
         'num_students': num_students,
     }
 
-    # Render the HTML template index.html with the data in the context variable
+    # Render the HTML template index.html with the data in the context variablesssss
     return render(request, 'viewshtmls/dashboard.html', context=context)
 
 
