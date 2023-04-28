@@ -16,11 +16,15 @@
       <div class="col-sm-2">
       {% block sidebar %}
         <ul class="sidebar-nav">
-          <li><a href="{% url 'jralumniarchive:dashboard' %}">Home</a></li>
-          <li><a href="{% url 'jralumniarchive:familiesf' %}">Families (using function) </a></li>
-          <li><a href="{% url 'jralumniarchive:familiesgc' %}">Families (using generic listview) </a></li>
-          <li><a href="{% url 'jralumniarchive:studentsf' %}">Alumni (using function))</a></li>
-          <li><a href="{% url 'jralumniarchive:studentsgc' %}">Alumni (using generic listview))</a></li>
+          <li><a href="{% url 'dashboard' %}">Home</a></li>
+          <li><a href="{% url 'familiesf' %}">Families (using function) </a></li>
+          <li><a href="{% url 'familiesgc' %}">Families (using listview) </a></li>
+
+            <li><a href="{% url 'studentsf' %}">Alumni (using function))</a></li>
+           <li><a href="{% url 'studentsgc' %}">Alumni (using listview))</a></li>
+{#          <li><a href="{% url 'jralumniarchive:studentsf' %}">Alumni (using function))</a></li>  #}
+{#           <li><a href="{% url 'jralumniarchive:studentsgc' %}">Alumni (using generic listview))</a></li>  #}
+{#         #}
         </ul>
      {% endblock %}
       </div>

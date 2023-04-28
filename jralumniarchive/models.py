@@ -16,8 +16,9 @@ class Student(models.Model):
     zip = models.CharField(max_length=10, help_text='Enter Addr Zip')
     birthdate = models.DateField
     phone1 = models.CharField(max_length=100, help_text='Enter Phone')
+    emailaddr = models.EmailField(max_length=200, null=True)
+#    photo = models.ImageField(upload_to='images/')
     createdby = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
     created_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
     verified_date = models.DateTimeField(blank=True, null=True)
 
@@ -55,8 +56,9 @@ class AlumniFamily(models.Model):
         return self.familyName
 
     def get_absolute_url(self):
-        """Returns the URL to access a detail record for this book."""
-        return reverse('jralumniarchive:justsomepage')
+        """Returns the URL to access a detail record for this family."""
+        return reverse('alumnifamily-detailgc', args=[str(self.id)])
+#        return reverse('justsomepage')
 
     def display_student(self):
         """Create a string for the Genre. This is required to display genre in Admin."""

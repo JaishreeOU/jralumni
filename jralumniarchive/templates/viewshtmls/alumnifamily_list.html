@@ -7,12 +7,17 @@
   {% if alumnifamily_list %}
   <ul>
     {% for AlumniFamily in alumnifamily_list %}
-      <li>
-        <a href="{{ AlumniFamily.get_absolute_url }}">{{ AlumniFamily.familyName }}</a> ({{AlumniFamily.display_student}})
-      </li>
-      <li>
-            <a href="{% url 'jralumniarchive:justsomepage' %}">{{ AlumniFamily.familyName }}justsomepage</a> ({{AlumniFamily.display_student}})
-      </li>
+        {% if "family_list" in additional_data %}
+            <li>
+                <a href="{% url 'alumnifamily-detailgc' AlumniFamily.id %}">{{ AlumniFamily.familyName }} fff </a> ({{AlumniFamily.display_student}})
+            </li>
+        {% endif %}
+        {% if "FamilyListView" in additional_data %}
+            <li>
+                <a href="{{ AlumniFamily.get_absolute_url }}">{{ AlumniFamily.familyName }} ccc</a> ({{AlumniFamily.display_student}})
+            </li>
+        {% endif %}
+
     {% endfor %}
   </ul>
   {% else %}

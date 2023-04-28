@@ -1,0 +1,18 @@
+{% extends 'viewshtmls/base.html' %}
+{% block title %}<title>JRAlumni System AlumniFamilyDetail {{additional_data}} </title>{% endblock %}
+
+
+{% block content %}
+  <h1>Title: {{ alumnifamily.familyName }} {{additional_data}}</h1>
+
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Students</h4>
+
+    {% for student in alumnifamily.student.all %}
+      <hr>
+            {{ student.lnamefname }}
+      <p class="text-muted"><strong>Id:</strong> {{ student.id }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}
