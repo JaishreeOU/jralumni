@@ -21,12 +21,15 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('jralumniarchive/', include('jralumniarchive.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 from django.views.generic import RedirectView
 urlpatterns += [
     path('', RedirectView.as_view(url='jralumniarchive/', permanent=True)),
 ]
+
+
 
 # URL mapping to serve static files during development (only)
 from django.conf import settings

@@ -9,4 +9,10 @@
     <li><strong>Families:</strong> {{ num_families }}</li>
     <li><strong>Alumni:</strong> {{ num_students }}</li>
   </ul>
+
+
+<h2>Dynamic content</h2>
+<p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
 {% endblock %}
+
+

@@ -17,9 +17,17 @@ def dashboard(request):
     num_families = AlumniFamily.objects.all().count()
     num_students = Student.objects.all().count()
 
+    # Number of visits to this view, as counted in the session variable.
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
+    # Set session as modified to force data updates/cookie to be saved.
+    request.session.modified = True
+
     context = {
         'num_families': num_families,
         'num_students': num_students,
+        'num_visits': num_visits,
     }
 
     # Render the HTML template index.html with the data in the context variablesssss
@@ -28,8 +36,17 @@ def dashboard(request):
 
 def justsomepage(request):
     """View function for justsomepage."""
+    cities = [
+        {'name': 'Mumbai', 'population': '19,000,000', 'country': 'India'},
+        {'name': 'New York', 'population': '20,000,000', 'country': 'USA'},
+        {'name': 'Calcutta', 'population': '15,000,000', 'country': 'India'},
+        {'name': 'Chicago', 'population': '7,000,000', 'country': 'USA'},
+        {'name': 'Tokyo', 'population': '33,000,000', 'country': 'Japan'},
+    ]
+
     context = {
         'message': 'Landing here',
+        'cities': cities
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -66,6 +83,7 @@ def family_detail_view(request, primary_key):
 class FamilyListView(ListView):
     model = AlumniFamily
     template_name = "viewshtmls/alumnifamily_list.html"
+    paginate_by = 2
 
     def get_queryset(self):
         return AlumniFamily.objects.all()
@@ -83,10 +101,11 @@ class StudentListView(ListView):
     model = Student
     template_name = "viewshtmls/student_list.html"
     context_object_name = "students"
+    paginate_by = 2
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Student.objects.order_by("-lastname")[:5]
+        return Student.objects.order_by("-lastname")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context

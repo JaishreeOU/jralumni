@@ -20,4 +20,8 @@ urlpatterns = [
 
     path('x', views.student_list, name='student_list'),
 #    path("families/<int:pk>/", views.DetailView.as_view(), name="detail"),
+
+
 ]
+
+
