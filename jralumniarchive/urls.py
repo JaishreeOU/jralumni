@@ -19,9 +19,19 @@ urlpatterns = [
     path('studentsgc/', views.StudentListView.as_view(), name='studentsgc'),
 
     path('x', views.student_list, name='student_list'),
-#    path("families/<int:pk>/", views.DetailView.as_view(), name="detail"),
+    #    path("families/<int:pk>/", views.DetailView.as_view(), name="detail"),
 
 
 ]
 
 
+urlpatterns += [
+    path('myfamily/', views.AlumniFamilyByUserListView.as_view(), name='myfamily'),
+]
+
+#Add django site authentication urls for login, logout, password mgmt
+# Add Django site authentication urls (for login, logout, password management)
+
+#urlpatterns += [
+#    path('accounts/', include('django.contrib.auth.urls')),
+#]

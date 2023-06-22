@@ -4,6 +4,12 @@ from django.shortcuts import get_object_or_404
 from .models import Student, AlumniFamily
 from django.views.generic import ListView, DetailView
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+@login_required
+
+
 # Create your views here.
 # try
 
@@ -34,6 +40,7 @@ def dashboard(request):
     return render(request, 'viewshtmls/dashboard.html', context=context)
 
 
+@login_required
 def justsomepage(request):
     """View function for justsomepage."""
     cities = [
@@ -54,6 +61,7 @@ def justsomepage(request):
 
 
 
+@login_required
 def student_list(request):
     students = Student.objects.order_by('created_date')
 #        #filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -61,12 +69,14 @@ def student_list(request):
 
 
 
+@login_required
 def family_list(request):
     alumnifamily_list = AlumniFamily.objects.all()
 #        #filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'viewshtmls/alumnifamily_list.html', {'alumnifamily_list': alumnifamily_list, 'additional_data': 'This is from family_list'})
 
 
+@login_required
 def family_detail_view(request, primary_key):
     additional_data = request.GET.get('additional_data') + '-> family_detail_view'
 
@@ -80,10 +90,12 @@ def family_detail_view(request, primary_key):
 ###################
 # generic Class Based View
 ###################
-class FamilyListView(ListView):
+class FamilyListView(LoginRequiredMixin,ListView):
     model = AlumniFamily
     template_name = "viewshtmls/alumnifamily_list.html"
     paginate_by = 2
+#    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
 
     def get_queryset(self):
         return AlumniFamily.objects.all()
@@ -97,11 +109,26 @@ class FamilyListView(ListView):
         return context
 
 
-class StudentListView(ListView):
+class AlumniFamilyByUserListView(LoginRequiredMixin,ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = AlumniFamily
+    template_name = 'viewshtmls/alumnifamilybyuser_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return (
+            AlumniFamily.objects.filter(familyName=self.request.user)
+        )
+
+
+
+class StudentListView(LoginRequiredMixin,ListView):
     model = Student
     template_name = "viewshtmls/student_list.html"
     context_object_name = "students"
     paginate_by = 2
+#    login_url = '/login/'
+    redirect_field_name = 'next'
 
     def get_queryset(self):
         """Return the last five published questions."""
@@ -115,9 +142,11 @@ class StudentListView(ListView):
         return context
 
 
-class FamilyDetailView(DetailView):
+class FamilyDetailView(LoginRequiredMixin,DetailView):
     model = AlumniFamily
     template_name = "viewshtmls/alumnifamily_detail.html"
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context

@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "viewshtmls/base.html" %}
 
 {% block content %}
 
   {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
+    <p>Your username and password dont match. Please try again. {{  form.errors }}</p>
   {% endif %}
 
   {% if next %}

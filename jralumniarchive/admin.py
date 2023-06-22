@@ -16,5 +16,5 @@ class AlumniFamilyAdmin(admin.ModelAdmin):
 # admin.site.register(Student)
 # admin.site.register(AlumniFamily)
 
-admin.site.register(Student,StudentAdmin)
-admin.site.register(AlumniFamily,AlumniFamilyAdmin)
+admin.site.register(Student, StudentAdmin)
+admin.site.register(AlumniFamily, AlumniFamilyAdmin)

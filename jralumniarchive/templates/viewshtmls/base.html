@@ -16,9 +16,19 @@
       <div class="col-sm-2">
       {% block sidebar %}
         <ul class="sidebar-nav">
-          <li><a href="{% url 'dashboard' %}">Home</a></li>
-          <li><a href="{% url 'familiesf' %}">Families (using function) </a></li>
-          <li><a href="{% url 'familiesgc' %}">Families (using listview) </a></li>
+             {% if user.is_authenticated %}
+                <li>User: {{ user.get_username }}</li>
+                <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+                {% if user. %}
+                    <li><a href="{% url 'myfamily' %}">My Family</a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+            {% endif %}
+
+            <li><a href="{% url 'dashboard' %}">Home</a></li>
+            <li><a href="{% url 'familiesf' %}">Families (using function) </a></li>
+            <li><a href="{% url 'familiesgc' %}">Families (using listview) </a></li>
 
             <li><a href="{% url 'studentsf' %}">Alumni (using function))</a></li>
            <li><a href="{% url 'studentsgc' %}">Alumni (using listview))</a></li>

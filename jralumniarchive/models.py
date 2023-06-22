@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 class Student(models.Model):
     lastname = models.CharField(max_length=200, help_text='Enter Last Name')
@@ -18,7 +18,8 @@ class Student(models.Model):
     phone1 = models.CharField(max_length=100, help_text='Enter Phone')
     emailaddr = models.EmailField(max_length=200, null=True)
 #    photo = models.ImageField(upload_to='images/')
-    createdby = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    createdby = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,null=True)
+
     created_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
     verified_date = models.DateTimeField(blank=True, null=True)
 
@@ -50,6 +51,10 @@ class AlumniFamily(models.Model):
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
     student = models.ManyToManyField(Student, help_text='Select a student for this family')
+
+    class Meta:
+        # …
+        permissions = (("can_update", "Can Update Rcord"),)
 
     def __str__(self):
         """String for representing the Model object."""
